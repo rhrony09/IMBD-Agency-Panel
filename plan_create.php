@@ -133,22 +133,22 @@ function getMonthName()
                                         <h4 class="text-center" style="margin-top: 40px; text-decoration: underline;">SWOT Analysis</h4>
                                         <div class="col-md-12">
                                             <div class="col-md-6">
-                                                <label for="straight" class="control-label">Straight</label> <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="(Idea: Product USP, New market, New Product, After sale service, Certification, Experience, Testimonials, Sourcing)"></i>
-                                                <textarea class="form-control" name="straight" id="straight" rows="4"></textarea>
+                                                <label for="swot_strength" class="control-label">Straight</label> <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="(Idea: Product USP, New market, New Product, After sale service, Certification, Experience, Testimonials, Sourcing)"></i>
+                                                <textarea class="form-control" name="swot_strength" id="swot_strength" rows="4"></textarea>
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="weakness" class="control-label">Weakness</label> <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, quam."></i>
-                                                <textarea class="form-control" name="weakness" id="weakness" rows="4"></textarea>
+                                                <label for="swot_weakness" class="control-label">Weakness</label> <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, quam."></i>
+                                                <textarea class="form-control" name="swot_weakness" id="swot_weakness" rows="4"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="col-md-6">
-                                                <label for="opportunities" class="control-label">Opportunities</label> <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas, eaque."></i>
-                                                <textarea class="form-control" name="opportunities" id="opportunities" rows="4"></textarea>
+                                                <label for="swot_opportunity" class="control-label">Opportunities</label> <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas, eaque."></i>
+                                                <textarea class="form-control" name="swot_opportunity" id="swot_opportunity" rows="4"></textarea>
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="threats" class="control-label">Threats</label> <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="(Idea: Low competition, Recurring model, Community build up)"></i>
-                                                <textarea class="form-control" name="threats" id="threats" col="4" rows="4"></textarea>
+                                                <label for="swot_threat" class="control-label">Threats</label> <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="(Idea: Low competition, Recurring model, Community build up)"></i>
+                                                <textarea class="form-control" name="swot_threat" id="swot_threat" col="4" rows="4"></textarea>
                                             </div>
                                         </div>
                                     </div>

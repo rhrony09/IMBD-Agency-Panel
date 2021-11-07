@@ -41,6 +41,15 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <style type="text/css">
+    h1,
+    h2,
+    h3,
+    h1,
+    h2,
+    h3 {
+      margin: 0 !important;
+    }
+
     .mt20 {
       margin-top: 20px;
     }
@@ -89,9 +98,9 @@
       margin: 0 auto;
     }
 
-    div.container {
+    /* div.container {
       width: 80%;
-    }
+    } */
 
     .table-borderless {
       border: 0 !important;
@@ -105,8 +114,17 @@
       font-weight: 400;
     }
 
+    .text-left {
+      text-align: left;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
     textarea {
       resize: vertical;
+      position: relative;
     }
   </style>
 </head>
