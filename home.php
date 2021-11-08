@@ -54,127 +54,13 @@ if (isset($_GET['year'])) {
         }
         ?>
         <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-green">
-              <div class="inner">
-                <?php
-                $sql = "SELECT * FROM token";
-                $query = $conn->query($sql);
 
-                echo "<h3>" . $query->num_rows . "</h3>";
-                ?>
-
-                <p>Total Tokens</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-clipboard"></i>
-              </div>
-              <a href="tokens.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-              <div class="inner">
-                <?php
-                $sql = "SELECT * FROM token WHERE MONTH(created_on) = '$mydate[mon]' AND YEAR(created_on) = '$mydate[year]'";
-                $total_query = $conn->query($sql);
-                $total = $total_query->num_rows;
-
-                echo "<h3>" . $total . "</h3>";
-                ?>
-
-                <p>Token Created This Month</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="tokens.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-yellow">
-              <div class="inner">
-                <?php
-                $sql = "SELECT * FROM token WHERE created_on = '$today'";
-                $today_query = $conn->query($sql);
-
-                echo "<h3>" . $today_query->num_rows . "</h3>"
-                ?>
-
-                <p>Token Created Today</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-clock"></i>
-              </div>
-              <a href="tokens.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-maroon">
-              <div class="inner">
-                <?php
-                $sql_cutting = "SELECT * FROM cutting_master";
-                $cutting_count = $conn->query($sql_cutting);
-
-                $sql_embroidery = "SELECT * FROM embroidery_master";
-                $embroidery_count = $conn->query($sql_embroidery);
-
-                $sql_swing = "SELECT * FROM swing_master";
-                $swing_count = $conn->query($sql_swing);
-
-                $total_employee = $cutting_count->num_rows + $embroidery_count->num_rows + $swing_count->num_rows;
-
-                echo "<h3>" . $total_employee . "</h3>"
-                ?>
-
-                <p>Total Factory Employee</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-ios-people"></i>
-              </div>
-              <a href="cutting_master.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
         <!-- /.row -->
         <div class="row">
           <div class="col-xs-12">
             <div class="box">
-              <div class="box-header with-border">
-                <h3 class="box-title">Monthly Token Create Report</h3>
-                <div class="box-tools pull-right">
-                  <!-- <form class="form-inline">
-                    <div class="form-group">
-                      <label>Select Year: </label>
-                      <select class="form-control input-sm" id="select_year">
-                        <?php
-                        // for ($i = 2021; $i <= 2025; $i++) {
-                        //   $selected = ($i == $year) ? 'selected' : '';
-                        //   echo "
-                        //     <option value='" . $i . "' " . $selected . ">" . $i . "</option>
-                        //   ";
-                        // }
-                        ?>
-                      </select>
-                    </div>
-                  </form> -->
-                </div>
-              </div>
               <div class="box-body">
-                <div class="chart">
-                  <br>
-                  <div id="legend" class="text-center"></div>
-                  <canvas id="barChart" style="height:350px"></canvas>
-                </div>
+
               </div>
             </div>
           </div>
@@ -188,25 +74,6 @@ if (isset($_GET['year'])) {
   </div>
   <!-- ./wrapper -->
 
-  <!-- Chart Data -->
-  <?php
-  $months = array();
-  $tokens = array();
-  for ($m = 1; $m <= 12; $m++) {
-    $sql = "SELECT * FROM token WHERE MONTH(created_on) = '$m' AND YEAR(created_on) = '$mydate[year]'";
-    $oquery = $conn->query($sql);
-    array_push($tokens, $oquery->num_rows);
-
-    $num = str_pad($m, 2, 0, STR_PAD_LEFT);
-    $month =  date('M', mktime(0, 0, 0, $m, 1));
-    array_push($months, $month);
-  }
-
-  $months = json_encode($months);
-  $tokens = json_encode($tokens);
-
-  ?>
-  <!-- End Chart Data -->
   <?php include 'includes/scripts.php'; ?>
   <script>
     $(function() {

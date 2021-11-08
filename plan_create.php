@@ -107,20 +107,20 @@ function getMonthName()
                                                 <input class="form-check-input" type="checkbox" id="branding" name="objective[]" value="Branding">
                                                 <label class="form-check-label fw-400" for="branding">Branding</label>
                                                 <input class="form-check-input" type="checkbox" id="sales" name="objective[]" value="Sales">
-                                                <label class="form-check-label fw-400" for="sales" name="objective[]">Sales</label>
-                                                <input class="form-check-input" type="checkbox" id="engagement" value="Engagement">
-                                                <label class="form-check-label fw-400" for="engagement" name="objective[]">Engagement</label>
-                                                <input class="form-check-input" type="checkbox" id="awareness" value="Awareness">
-                                                <label class="form-check-label fw-400" for="awareness" name="objective[]">Awareness</label>
+                                                <label class="form-check-label fw-400" for="sales">Sales</label>
+                                                <input class="form-check-input" type="checkbox" id="engagement" name="objective[]" value="Engagement">
+                                                <label class="form-check-label fw-400" for="engagement">Engagement</label>
+                                                <input class="form-check-input" type="checkbox" id="awareness" name="objective[]" value="Awareness">
+                                                <label class="form-check-label fw-400" for="awareness">Awareness</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="duration" class="control-label">Duration</label>
-                                            <input type="number" class="form-control" id="duration" name="duration">
+                                            <input type="number" class="form-control" id="duration" name="duration" required>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="for" class="control-label">For</label>
-                                            <select class="form-control" name="for" id="for">
+                                            <select class="form-control" name="for" id="for" required>
                                                 <option value="Days" selected>Days</option>
                                                 <option value="Week(s)">Week(s)</option>
                                                 <option value="Month(s)">Month(s)</option>

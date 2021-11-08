@@ -4,8 +4,23 @@
     -moz-print-color-adjust: exact !important;
     -ms-print-color-adjust: exact !important;
   }
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+  }
+  .box {
+    border: 0 !important;
+  }
   .head-section .logo {
     background-color: #333 !important;
+  }
+  .pdf-footer {
+    background-color: #333 !important;
+  }
+  .pdf-footer p,
+  .pdf-footer h3 {
+    color: #fff !important;
   }
   .business-info {
     background-color: #ececec !important;
@@ -13,22 +28,27 @@
   footer {
     display: none !important;
   }
+  .box-body {
+    padding: 0 !important;
+  }
 }
 
 @page {
   size: A4 portrait;
   margin-left: 0px;
   margin-right: 0px;
-  margin-top: 0px;
+  margin-top: 0.5cm;
   margin-bottom: 0px;
-  margin: 0;
 }
-.box {
-  border: 0 !important;
+
+@page :first {
+  margin-top: 0cm; /* Top margin on first page */
 }
+
 h3.heading {
   padding-bottom: 10px;
 }
+
 .head-section .logo {
   text-align: center;
   padding: 30px;
@@ -37,6 +57,13 @@ h3.heading {
 
 .head-section .logo img {
   height: 50px;
+}
+
+.pdf-footer {
+  text-align: center;
+  padding: 10px 0;
+  background-color: #333;
+  color: #fff;
 }
 
 .business-info {
@@ -57,9 +84,21 @@ h3.heading {
 }
 
 .swot_analysis {
-  padding: 30px 0;
+  padding-top: 30px;
+}
+
+.content_plan {
+  padding-top: 15px;
+  page-break-after: always;
 }
 
 .content_details {
-  padding-top: 30px;
+  padding-top: 15px;
+}
+
+.promotion_plan {
+  padding-top: 15px;
+}
+.roi {
+  padding-top: 15px;
 }

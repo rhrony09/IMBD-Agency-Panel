@@ -12,13 +12,12 @@ if (isset($_POST['create'])) : ?>
     $business_address = $_POST['business_address'];
 
     //grab object info
+    $marketing_obj = "";
     if (isset($_POST['objective'])) {
         $marketing_objective = $_POST['objective'];
-        $marketing_obj = "";
         foreach ($marketing_objective as $key => $value) {
             $marketing_obj .= '<i style="font-size: 12px" class="fa fa-dot-circle-o" aria-hidden="true"></i> ' . $value . " ";
         }
-        //$marketing_obj = rtrim($marketing_obj, ", ");
     }
 
     //grab duration info
@@ -53,7 +52,7 @@ if (isset($_POST['create'])) : ?>
         $content_plan_data[$key]['max_cost'] = $value;
     }
     foreach ($plan_approx_time as $key => $value) {
-        $content_plan_data[$key]['approx_time'] = $value;
+        $content_plan_data[$key]['approx_time'] = $value . " Days";
     }
 
     //grab the content details data
@@ -74,25 +73,26 @@ if (isset($_POST['create'])) : ?>
     }
 
     //grab the content mapping data
+    $content_mapping_data = [];
     if (isset($_POST["mapping_platforms"])) {
         $mapping_content = $_POST["mapping_content"];
         $mapping_date = $_POST["mapping_date"];
         $mapping_platforms = $_POST["mapping_platforms"];
         $mapping_duration = $_POST["mapping_duration"];
 
-        $content_mapping_data = [];
-
         foreach ($mapping_content as $key => $value) {
             $content_mapping_data[$key]['mapping_content'] = $value;
         }
         foreach ($mapping_date as $key => $value) {
-            $content_mapping_data[$key]['mapping_date'] = $value;
+            $mapping_date_arr = date_create($value);
+            $mapping_date_formated = date_format($mapping_date_arr, "d M, Y");
+            $content_mapping_data[$key]['mapping_date'] = $mapping_date_formated;
         }
         foreach ($mapping_platforms as $key => $value) {
             $content_mapping_data[$key]['mapping_platforms'] = $value;
         }
         foreach ($mapping_duration as $key => $value) {
-            $content_mapping_data[$key]['mapping_duration'] = $value;
+            $content_mapping_data[$key]['mapping_duration'] = $value . " Days";
         }
     }
 
@@ -126,6 +126,7 @@ if (isset($_POST['create'])) : ?>
     }
 
     //grab the roi data
+    $roi_data = [];
     if (isset($_POST["roi_month"])) {
         $roi_month = $_POST["roi_month"];
         $roi_expense = $_POST["roi_expense"];
@@ -133,8 +134,6 @@ if (isset($_POST['create'])) : ?>
         $roi_sales_rate = $_POST["roi_sales_rate"];
         $roi_total_sale = $_POST["roi_total_sale"];
         $roi_return_type = $_POST["roi_return_type"];
-
-        $roi_data = [];
 
         foreach ($roi_month as $key => $value) {
             $roi_data[$key]['roi_month'] = $value;
@@ -149,11 +148,11 @@ if (isset($_POST['create'])) : ?>
         }
 
         foreach ($roi_sales_rate as $key => $value) {
-            $roi_data[$key]['roi_sales_rate'] = $value;
+            $roi_data[$key]['roi_sales_rate'] = $value . "%";
         }
 
         foreach ($roi_total_sale as $key => $value) {
-            $roi_data[$key]['roi_total_sale'] = $value;
+            $roi_data[$key]['roi_total_sale'] = $value . " BDT";
         }
 
         foreach ($roi_return_type as $key => $value) {
@@ -164,8 +163,10 @@ if (isset($_POST['create'])) : ?>
     //function for isset
     function print_data($var)
     {
-        if (isset($var)) {
+        if ($var != null) {
             echo $var;
+        } else {
+            echo "n/a";
         }
     }
     ?>
@@ -204,14 +205,14 @@ if (isset($_POST['create'])) : ?>
                                             <div class="col-xs-3">
                                                 <p>Sender Email: <?php print_data($sender_email) ?></p>
                                             </div>
-                                            <div class="text-left col-xs-4">
+                                            <div class="text-left col-xs-6">
                                                 <p><strong>Business Address:</strong><br><?php print_data($business_address) ?></p>
                                             </div>
                                             <div class="text-left col-xs-4">
                                                 <p><strong>Core Marketing Objective:</strong><br>
                                                     <?php print_data($marketing_obj) ?></p>
                                             </div>
-                                            <div class="text-left col-xs-4">
+                                            <div class="text-left col-xs-2">
                                                 <p><strong>Plan For:</strong><br>
                                                     <?php if (!empty($duration && $duration_for)) {
                                                         echo $duration . " " . $duration_for;
@@ -250,36 +251,66 @@ if (isset($_POST['create'])) : ?>
                                             <tr>
                                                 <th width="41%">Content</th>
                                                 <th width="25%">Objective</th>
-                                                <th width="11%">Min. Cost</th>
-                                                <th width="11%">Max. Cost</th>
-                                                <th width="12%">Approx. Time (Days)</th>
+                                                <th class="text-center" width="11%">Min. Cost</th>
+                                                <th class="text-center" width="11%">Max. Cost</th>
+                                                <th class="text-center" width="12%">Approx. Time</th>
                                             </tr>
                                             <?php
+                                            //content plan total count
+                                            $content_plan_min_total = 0;
+                                            $content_plan_max_total = 0;
                                             foreach ($content_plan_data as $key => $value) : ?>
                                                 <tr>
                                                     <td><?php print_data($value['content']) ?></td>
                                                     <td><?php print_data($value['objective']) ?></td>
-                                                    <td><?php print_data($value['min_cost']) ?></td>
-                                                    <td><?php print_data($value['max_cost']) ?></td>
-                                                    <td><?php print_data($value['approx_time']) ?></td>
+                                                    <td class="text-center"><?php
+                                                                            if ($value['min_cost'] != "") {
+                                                                                $content_plan_min_total += $value['min_cost'];
+                                                                                print_data($value['min_cost']);
+                                                                            } else {
+                                                                                echo "0";
+                                                                            }
+                                                                            echo " BDT" ?></td>
+                                                    <td class="text-center"><?php
+                                                                            if ($value['min_cost'] != "") {
+                                                                                $content_plan_max_total += $value['max_cost'];
+                                                                                print_data($value['max_cost']);
+                                                                            } else {
+                                                                                echo "0";
+                                                                            }
+                                                                            echo " BDT" ?></td>
+                                                    <td class="text-center"><?php print_data($value['approx_time']) ?></td>
                                                 </tr>
                                             <? endforeach ?>
-
+                                            <tr>
+                                                <th colspan="2" class="text-center">
+                                                    Total
+                                                </th>
+                                                <th class="text-center">
+                                                    <?php echo $content_plan_min_total . " BDT" ?>
+                                                </th>
+                                                <th class="text-center">
+                                                    <?php echo $content_plan_max_total . " BDT" ?>
+                                                </th>
+                                                <th class="text-center">-</th>
+                                            </tr>
                                         </table>
                                     </div>
                                     <!-- End Content Plan with Details -->
-                                    <!-- Start Content Details with Details -->
+                                    <!-- Start Content Details -->
                                     <div class="content_details">
                                         <h3 class="text-center heading">Content Details</h3>
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th width="36%">Content Title</th>
-                                                <th width="34%">Description</th>
-                                                <th width="30%">Required Resources </th>
+                                                <th width="7%" class="text-center">S/N</th>
+                                                <th width="35%">Content Title</th>
+                                                <th width="30%">Description</th>
+                                                <th width="28%">Required Resources</th>
                                             </tr>
                                             <?php
                                             foreach ($content_details_data as $key => $value) : ?>
                                                 <tr>
+                                                    <td class="text-center"><?php echo ++$key ?></td>
                                                     <td><?php print_data($value['details_content']) ?></td>
                                                     <td><?php print_data($value['details_description']) ?></td>
                                                     <td><?php print_data($value['details_required_resources']) ?></td>
@@ -288,7 +319,116 @@ if (isset($_POST['create'])) : ?>
 
                                         </table>
                                     </div>
-                                    <!-- End Content Details with Details -->
+                                    <!-- End Content Details -->
+                                    <!-- Start Content Mapping -->
+                                    <div class="content_details">
+                                        <h3 class="text-center heading">Content Mapping</h3>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th width="7%" class="text-center">S/N</th>
+                                                <th width="42%">Content</th>
+                                                <th width="18%" class="text-center">Publishing Date</th>
+                                                <th width="18%" class="text-center">Platforms</th>
+                                                <th width="15%" class="text-center">Campaign Duration</th>
+                                            </tr>
+                                            <?php
+                                            foreach ($content_mapping_data as $key => $value) : ?>
+                                                <tr>
+                                                    <td class="text-center"><?php echo ++$key ?></td>
+                                                    <td><?php print_data($value['mapping_content']) ?></td>
+                                                    <td class="text-center"><?php print_data($value['mapping_date']) ?></td>
+                                                    <td class="text-center"><?php print_data($value['mapping_platforms']) ?></td>
+                                                    <td class="text-center"><?php print_data($value['mapping_duration']) ?></td>
+                                                </tr>
+                                            <? endforeach ?>
+                                        </table>
+                                    </div>
+                                    <!-- End Content Mapping -->
+                                    <!-- Start Promotion Plan -->
+                                    <div class="promotion_plan">
+                                        <h3 class="text-center heading">Promotion Plan</h3>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th width="41%">Content</th>
+                                                <th width="25%">Objective</th>
+                                                <th class="text-center" width="11%">Min. Cost</th>
+                                                <th class="text-center" width="11%">Max. Cost</th>
+                                                <th class="text-center" width="12%">Target</th>
+                                            </tr>
+                                            <?php
+                                            //Promotion Plan total count
+                                            $promotional_plan_min_total = 0;
+                                            $promotional_plan_max_total = 0;
+                                            foreach ($promotional_plan_data as $key => $value) : ?>
+                                                <tr>
+                                                    <td><?php print_data($value['promotion_content']) ?></td>
+                                                    <td><?php print_data($value['promotion_objective']) ?></td>
+                                                    <td class="text-center"><?php
+                                                                            if ($value['promotion_min_cost'] != "") {
+                                                                                $promotional_plan_min_total += $value['promotion_min_cost'];
+                                                                                print_data($value['promotion_min_cost']);
+                                                                            } else {
+                                                                                echo "0";
+                                                                            }
+                                                                            echo " BDT" ?>
+                                                    </td>
+                                                    <td class="text-center"><?php
+                                                                            if ($value['promotion_max_cost'] != "") {
+                                                                                $promotional_plan_max_total += $value['promotion_max_cost'];
+                                                                                print_data($value['promotion_max_cost']);
+                                                                            } else {
+                                                                                echo "0";
+                                                                            }
+                                                                            echo " BDT" ?>
+                                                    </td>
+                                                    <td class="text-center"><?php print_data($value['promotion_target']) ?></td>
+                                                </tr>
+                                            <? endforeach ?>
+                                            <tr>
+                                                <th colspan="2" class="text-center">
+                                                    Total
+                                                </th>
+                                                <th class="text-center">
+                                                    <?php echo $promotional_plan_min_total . " BDT" ?>
+                                                </th>
+                                                <th class="text-center">
+                                                    <?php echo $promotional_plan_max_total . " BDT" ?>
+                                                </th>
+                                                <th class="text-center">-</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <!-- End Promotion Plan -->
+                                    <!-- Start ROI -->
+                                    <div class="roi">
+                                        <h3 class="text-center heading">ROI</h3>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th class="text-center">Month</th>
+                                                <th class="text-center">Expense</th>
+                                                <th class="text-center">Conversion</th>
+                                                <th class="text-center">Sales Rate</th>
+                                                <th class="text-center">Total Sales</th>
+                                                <th class="text-center">Return Type</th>
+                                            </tr>
+                                            <?php
+                                            foreach ($roi_data as $key => $value) : ?>
+                                                <tr>
+                                                    <td class="text-center"><?php print_data($value['roi_month']) ?></td>
+                                                    <td class="text-center"><?php print_data($value['roi_expense']) ?></td>
+                                                    <td class="text-center"><?php print_data($value['roi_conversion']) ?></td>
+                                                    <td class="text-center"><?php print_data($value['roi_sales_rate']) ?></td>
+                                                    <td class="text-center"><?php print_data($value['roi_total_sale']) ?></td>
+                                                    <td class="text-center"><?php print_data($value['roi_return_type']) ?></td>
+                                                </tr>
+                                            <? endforeach ?>
+                                        </table>
+                                    </div>
+                                    <!-- End ROI -->
+                                    <div class="pdf-footer">
+                                        <h3>IMBD Agency</h3>
+                                        <p>A Internet Marketing & Business Development Agency</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
